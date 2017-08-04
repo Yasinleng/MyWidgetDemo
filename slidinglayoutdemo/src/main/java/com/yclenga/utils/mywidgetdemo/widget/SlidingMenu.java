@@ -33,9 +33,6 @@ public class SlidingMenu extends HorizontalScrollView {
     private View contentView;
     private View menuView;
 
-
-
-
     //是否拦截
     private boolean mIsIntercept = false;
 
@@ -67,13 +64,13 @@ public class SlidingMenu extends HorizontalScrollView {
                     break;
                 case RIGHT:
                     if (mMenuIsOpen) {
-                        //打开往右边快速滑动就去切换(关闭)
+                        //打开往左边快速滑动就去切换(打开)
                         if (velocityX < 0) {
                             openMenu();
                             return true;
                         }
                     } else {
-                        //关闭的时候往左边快速滑动切换(打开)
+                        //关闭的时候往右边快速滑动切换(关闭)
                         if (velocityX > 0) {
                             closeMenu();
                             return true;
@@ -102,12 +99,9 @@ public class SlidingMenu extends HorizontalScrollView {
         TypedArray mTypedArray=context.obtainStyledAttributes(attrs, R.styleable.SlidingMenu);
         if (mTypedArray != null){
             menuType=mTypedArray.getInt(R.styleable.SlidingMenu_menutype,LEFT);
-            float menuWidth=mTypedArray.getDimension(R.styleable.SlidingMenu_menuWidth,dp2px(50));
-            mMenuWidth= (int)menuWidth;
+            mMenuWidth= (int) mTypedArray.getDimension(R.styleable.SlidingMenu_menuWidth,dp2px(50));
             mTypedArray.recycle();
         }
-
-
         mGestureDetector=new GestureDetector(context,mOnGestureListener);
     }
 
@@ -150,7 +144,7 @@ public class SlidingMenu extends HorizontalScrollView {
 
     }
 
-    //处理右边的缩放，左边的缩放和透明度，需要不断的获取当前滚动的位置
+    //处理内容的缩放，菜单的缩放和透明度，需要不断的获取当前滚动的位置
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
@@ -164,7 +158,6 @@ public class SlidingMenu extends HorizontalScrollView {
             l = mMenuWidth - l;
             pivotX=contentView.getWidth();
         }
-        float TranslationX=l * 0.15f;
 
         //设置缩放的中心点位置
         ViewCompat.setPivotX(contentView, pivotX);
@@ -246,13 +239,10 @@ public class SlidingMenu extends HorizontalScrollView {
                 currentScrollX=mMenuWidth-getScrollX();
             }
             if (currentScrollX > mMenuWidth / 2) {
-                //关闭
                 closeMenu();
             } else {
-                //打开
                 openMenu();
             }
-            //确保super.onTouchEvent(ev)不执行
             return true;
         }
         return super.onTouchEvent(ev);
@@ -261,22 +251,19 @@ public class SlidingMenu extends HorizontalScrollView {
 
 
     /**
-     * 关闭菜单  滚动到mMenuWidth的位置
+     * 关闭菜单
      */
     private void closeMenu() {
-        //带有动画效果
-
         if (menuType==LEFT) {
             smoothScrollTo(mMenuWidth, 0);
         }else {
             smoothScrollTo(0, 0);
         }
-
         mMenuIsOpen = false;
     }
 
     /**
-     * 打开菜单 滚动到0的位置
+     * 打开菜单
      */
     private void openMenu() {
         if (menuType==LEFT) {
@@ -289,7 +276,7 @@ public class SlidingMenu extends HorizontalScrollView {
 
 
     /**
-     * dip转成px
+     * dp转成px
      *
      * @param dp
      * @return
