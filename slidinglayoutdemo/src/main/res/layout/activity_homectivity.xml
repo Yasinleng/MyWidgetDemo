@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yclenga.utils.mywidgetdemo.widget.SlidingMenu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_homectivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:menutype="left"
+    app:menuWidth="250dp"
+    tools:context="com.yclenga.utils.mywidgetdemo.Homectivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <include layout="@layout/content_layout"/>
+        <include layout="@layout/menu_layout"/>
+
+    </LinearLayout>
+
+
+</com.yclenga.utils.mywidgetdemo.widget.SlidingMenu>
