@@ -5,17 +5,22 @@
     android:id="@+id/activity_homectivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:menutype="left"
+    app:menutype="right"
     app:menuWidth="250dp"
     tools:context="com.yclenga.utils.mywidgetdemo.Homectivity">
+
+    <!--设置控件SlidingMenu的属性menutype,设置左边菜单还是右边菜单：right|left -->
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-
-
+        <!--左边菜单-->
+        <!--<include layout="@layout/menu_layout"/>-->
+        <!--中间内容-->
         <include layout="@layout/content_layout"/>
+        <!--右边菜单-->
         <include layout="@layout/menu_layout"/>
 
     </LinearLayout>

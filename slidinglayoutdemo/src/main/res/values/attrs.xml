@@ -3,8 +3,8 @@
 
     <declare-styleable name="SlidingMenu">
         <attr name="menutype">
-            <enum name="right" value="0"/>
-            <enum name="left" value="1"/>
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
         </attr>
         <attr name="menuWidth" format="dimension"/>
     </declare-styleable>

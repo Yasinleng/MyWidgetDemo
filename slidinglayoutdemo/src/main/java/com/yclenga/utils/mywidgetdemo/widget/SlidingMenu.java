@@ -23,8 +23,9 @@ import com.yclenga.utils.mywidgetdemo.R;
 public class SlidingMenu extends HorizontalScrollView {
 
     private static final String TAG = "SlidingMenu";
-    private static final int RIGHT=0;
-    private static final int LEFT=1;
+
+    private static final int LEFT=0;
+    private static final int RIGHT=1;
 
     private int menuType;
     private int mMenuWidth;
@@ -49,7 +50,7 @@ public class SlidingMenu extends HorizontalScrollView {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
             switch (menuType){
-                case RIGHT:
+                case LEFT:
                     if (mMenuIsOpen) {
                         //打开往右边快速滑动就去切换(关闭)
                         if (velocityX < 0) {
@@ -64,7 +65,7 @@ public class SlidingMenu extends HorizontalScrollView {
                         }
                     }
                     break;
-                case LEFT:
+                case RIGHT:
                     if (mMenuIsOpen) {
                         //打开往右边快速滑动就去切换(关闭)
                         if (velocityX < 0) {
@@ -100,7 +101,7 @@ public class SlidingMenu extends HorizontalScrollView {
         mScreenWidth=getScreenWidth(context);
         TypedArray mTypedArray=context.obtainStyledAttributes(attrs, R.styleable.SlidingMenu);
         if (mTypedArray != null){
-            menuType=mTypedArray.getInt(R.styleable.SlidingMenu_menutype,RIGHT);
+            menuType=mTypedArray.getInt(R.styleable.SlidingMenu_menutype,LEFT);
             float menuWidth=mTypedArray.getDimension(R.styleable.SlidingMenu_menuWidth,dp2px(50));
             mMenuWidth= (int)menuWidth;
             mTypedArray.recycle();
@@ -124,13 +125,13 @@ public class SlidingMenu extends HorizontalScrollView {
 
 
         switch (menuType){
-            case RIGHT:
+            case LEFT:
                 //菜单页的宽度是屏幕的宽度 - 右边的一小部分距离(自定义属性)
                 menuView = container.getChildAt(0);
                 //内容页的宽度是屏幕的宽度
                 contentView = container.getChildAt(1);
                 break;
-            case LEFT:
+            case RIGHT:
                 //内容页的宽度是屏幕的宽度
                 contentView = container.getChildAt(0);
                 //菜单页的宽度是屏幕的宽度 - 右边的一小部分距离(自定义属性)
@@ -159,10 +160,11 @@ public class SlidingMenu extends HorizontalScrollView {
         int pivotY=contentView.getMeasuredHeight() / 2;
 
 
-        if (menuType==LEFT) {
+        if (menuType==RIGHT) {
             l = mMenuWidth - l;
             pivotX=contentView.getWidth();
         }
+        float TranslationX=l * 0.15f;
 
         //设置缩放的中心点位置
         ViewCompat.setPivotX(contentView, pivotX);
@@ -187,11 +189,12 @@ public class SlidingMenu extends HorizontalScrollView {
         ViewCompat.setScaleX(menuView, menuScale);
         ViewCompat.setScaleY(menuView, menuScale);
         //设置文字平移
-        if (menuType==LEFT){
+        if (menuType==RIGHT){
             ViewCompat.setTranslationX(menuView, -l * 0.15f);
         }else {
             ViewCompat.setTranslationX(menuView, l * 0.15f);
         }
+
 
     }
 
@@ -199,7 +202,7 @@ public class SlidingMenu extends HorizontalScrollView {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         //初始化进入的时候是关闭的，移动一段距离就可以了  在onResume之后调用
-        if (menuType==RIGHT){
+        if (menuType==LEFT){
             scrollTo(mMenuWidth, 0);
         }else {
             scrollTo(0, 0);
@@ -239,7 +242,7 @@ public class SlidingMenu extends HorizontalScrollView {
 
             int currentScrollX =getScrollX();
 
-            if (menuType==LEFT){
+            if (menuType==RIGHT){
                 currentScrollX=mMenuWidth-getScrollX();
             }
             if (currentScrollX > mMenuWidth / 2) {
@@ -263,7 +266,7 @@ public class SlidingMenu extends HorizontalScrollView {
     private void closeMenu() {
         //带有动画效果
 
-        if (menuType==RIGHT) {
+        if (menuType==LEFT) {
             smoothScrollTo(mMenuWidth, 0);
         }else {
             smoothScrollTo(0, 0);
@@ -276,7 +279,7 @@ public class SlidingMenu extends HorizontalScrollView {
      * 打开菜单 滚动到0的位置
      */
     private void openMenu() {
-        if (menuType==RIGHT) {
+        if (menuType==LEFT) {
             smoothScrollTo(0, 0);
         }else {
             smoothScrollTo(mScreenWidth, 0);
